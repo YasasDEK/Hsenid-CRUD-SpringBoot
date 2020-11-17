@@ -4,6 +4,9 @@ import com.hsenidemployees.employeemanagement.model.Employee;
 import com.hsenidemployees.employeemanagement.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,4 +22,26 @@ public class EmployeeService {
         employeeRepository.findAll().forEach(employeeList::add);
         return employeeList;
     }
+
+    public void deleteEmployee(long id) {
+        Employee employee = employeeRepository.findById((long)id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + (long)id));
+        employeeRepository.deleteById((long)id);
+    }
+
+    public void addEmployee(Employee employee, BindingResult result) {
+        employeeRepository.save(employee);
+    }
+
+    public Employee showUpdateForm(long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        return employee;
+    }
+
+    public void updateUser(long id, Employee employee) {
+        employeeRepository.save(employee);
+    }
+
 }

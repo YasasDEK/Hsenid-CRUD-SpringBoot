@@ -1,36 +1,49 @@
 package com.hsenidemployees.employeemanagement.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-@IdClass(EmployeePrimary.class)
+//@IdClass(EmployeePrimary.class)
 public class Employee {
     @Id
     private Long employeeId;
-    @Id
+    @Column
+    @NotBlank(message = "department Id is mandatory")
     private Long departmentId;
     @Column
+    @Email
+    @NotBlank(message = "Email is mandatory")
     private String email;
     @Column
+    @NotBlank(message = "First Name is mandatory")
     private String firstName;
     @Column
+    @NotBlank(message = "Last Name is mandatory")
     private String lastName;
     @Column
+    @NotBlank(message = "NIC is mandatory")
+    private String nic;
+    @Column
+    @NotBlank(message = "sbu Id is mandatory")
     private int sbuId;
+    @Column
+    @NotBlank(message = "Experience Id is mandatory")
+    private int experience;
 
     public Employee() {
     }
 
-    public Employee(long employeeId, long departmentId, String email, String firstName, String lastName, int sbuId) {
+    public Employee(long employeeId, long departmentId, String email, String firstName, String lastName, int sbuId, String nic, int experience) {
         this.employeeId = employeeId;
         this.departmentId = departmentId;
         this.sbuId = sbuId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.nic = nic;
+        this.experience = experience;
     }
 
     public Long getEmployeeId() {
@@ -80,5 +93,13 @@ public class Employee {
     public void setSbuId(int sbuId) {
         this.sbuId = sbuId;
     }
+
+    public String getNic() { return nic; }
+
+    public void setNic(String nic) { this.nic = nic; }
+
+    public int getExperience() { return experience; }
+
+    public void setExperience(int experience) { this.experience = experience; }
 
 }
